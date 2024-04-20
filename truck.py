@@ -35,10 +35,10 @@ class Truck:
     def add_packages(self, package_list):
         for package_id in package_list:
             # Retrieve package information from the package hash
-            package = package_hash.search(package_id) # Time complexity: O(1)
+            package = package_hash.search(package_id)  # Time complexity: O(1)
             package.status = f"Delivery Package #{package_id} is en route on truck {self.truck_number}"
             # Add the package to the truck's package list
-            self.package_list.append(package) #Time complexity: O(N)
+            self.package_list.append(package)  #Time complexity: O(N)
 
     # Get the total miles traveled by the truck
     # Time complexity: O(1), Space complexity: O(1)
@@ -60,7 +60,7 @@ class Truck:
             # If elapse time is greater than time given break out of while-loop
             if time_of_day < self.elapsed_time:
                 break
-            # If time is greater than or equals 10:20, change the address of package 9
+
             if self.elapsed_time >= datetime.timedelta(hours=10, minutes=20):
                 package_hash.search(9).address = "410 S State St"
 

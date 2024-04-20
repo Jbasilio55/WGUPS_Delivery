@@ -1,5 +1,5 @@
 # Author: Jorge Basilio
-# Student ID:
+# Student ID: 011149553
 # Title: Task 2 - WGUPS Routing Program Implementation
 
 import datetime
@@ -52,7 +52,8 @@ if __name__ == "__main__":
 
     # Truck 3 --> All EOD packages
     # truck3_departure_time = "8:00"
-    truck_three_packages = [2, 4, 5, 7, 8, 9, 10, 11, 12, 17, 19, 21, 22, 23, 24, 26]
+    # truck_three_packages = [2, 4, 5, 7, 8, 9, 10, 11, 12, 17, 19, 21, 22, 23, 24, 26]
+    truck_three_packages = [2, 4, 5, 7, 8, 10, 11, 12, 17, 19, 21, 22, 23, 24, 26]
 
     # Print the title of the program
     print("===========================================")
@@ -103,7 +104,7 @@ if __name__ == "__main__":
                 # User selection prompt
                 print()
                 print("Select all option using the number keys:")
-                print("[1] View all packages and Mileage...")
+                print("[1] View all packages delivered and Mileage...")
                 print("[2] Look up a time...")
                 print("[3] Exit...")
 
@@ -112,6 +113,7 @@ if __name__ == "__main__":
                 # Function to get information about all packages
                 # Display all package information when delivered if selected option is '1'
                 if key_pressed == 1:
+                    truck_three_packages.append(9)
                     # chosen time after all packages are delivered
                     time = "12:00"
                     latest_time = datetime.datetime.strptime(time, "%H:%M")
@@ -119,6 +121,7 @@ if __name__ == "__main__":
                     # calculate and display all packages
                     start_route(latest_time)
 
+                    truck_three_packages.remove(9)
                 # Handle the case where user wants to look up a time
                 if key_pressed == 2:
                     print("Please type in a time")
@@ -138,15 +141,15 @@ if __name__ == "__main__":
 
                     # Check if the time input is before or after 9:05 AM
                     if time_obj.time() < datetime.time(9, 5):
-                        # Assign packages to trucks and calculate routes
-                        truck1.add_packages(truck_one_packages)
-                        truck3.add_packages(truck_three_packages)
-
-                        # Assign packages to trucks and calculate routes
-                        truck1.route(time_obj)
-                        truck3.route(time_obj)
-
                         if key_pressed_2 == 2:
+                            # Assign packages to trucks and calculate routes
+                            truck1.add_packages(truck_one_packages)
+                            truck3.add_packages(truck_three_packages)
+
+                            # Assign packages to trucks and calculate routes
+                            truck1.route(time_obj)
+                            truck3.route(time_obj)
+
                             # Display package information and truck mileage
                             get_package_info()
                             print(f"truck #1: {truck1.get_miles()}")
@@ -160,6 +163,14 @@ if __name__ == "__main__":
                             # Reset truck objects
                             reset_trucks_and_packages()
                         else:
+                            # Assign packages to trucks and calculate routes
+                            truck1.add_packages(truck_one_packages)
+                            truck3.add_packages(truck_three_packages)
+
+                            # Assign packages to trucks and calculate routes
+                            truck1.route(time_obj)
+                            truck3.route(time_obj)
+
                             print("Enter Package ID: ")
                             package_id = int(input())
 
@@ -177,9 +188,14 @@ if __name__ == "__main__":
                             reset_trucks_and_packages()
                     else:
                         if key_pressed_2 == 2:
+                            if time_obj.time() >= datetime.time(10, 20):
+                                truck_three_packages.append(9)
                             # get all packages info
                             start_route(time_obj)
                         else:
+                            if time_obj.time() >= datetime.time(10, 20):
+                                truck_three_packages.append(9)
+
                             print("Enter Package ID: ")
                             package_id = int(input())
 
@@ -208,6 +224,6 @@ if __name__ == "__main__":
                 if key_pressed == 3:
                     break
             except ValueError:
-                print("Please type in a number between 1-3")
+                print("Please type in a valid number")
     except KeyboardInterrupt:
         print()
